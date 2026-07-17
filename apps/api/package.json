@@ -14,18 +14,19 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@clerk/express": "^2.1.42",
+    "@clerk/backend": "^3.11.6",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1",
+    "express": "4.21.2",
     "helmet": "^8.3.0",
+    "jose": "^6.2.3",
     "mongoose": "^9.7.4",
     "morgan": "^1.11.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
+    "@types/express": "4.17.21",
     "@types/morgan": "^1.9.10",
     "@types/node": "^20.19.43",
     "tsx": "^4.23.1",
