@@ -28,10 +28,11 @@ export async function authMiddleware(
 
     next();
   } catch (error) {
-    console.error(error);
+  console.error("Auth error:", error);
 
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  return res.status(401).json({
+    message: "Unauthorized",
+    error: error instanceof Error ? error.message : error,
+  });
+}
 }
