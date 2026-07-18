@@ -26,7 +26,7 @@ export async function loadMembership(
     req.user = {
       ...req.user,
       membership,
-      organizationId: membership.organizationId.toString(),
+      organizationId: membership.organizationId._id.toString(),
       role: membership.role,
     };
 

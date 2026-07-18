@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { authMiddleware } from "./middleware/auth.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 import membershipRoutes from "./modules/memberships/membership.routes.js";
+import customerRoutes from "./modules/customers/customer.routes.js";
 
 const app: express.Express = express();
 
@@ -15,7 +17,9 @@ app.use(authMiddleware);
 
 // Routes
 app.use("/api/memberships", membershipRoutes);
+app.use("/api/customers", customerRoutes);
 
+app.use(errorHandler);
 
 
 app.get("/health", (_req, res) => {
