@@ -5,6 +5,7 @@ import { authMiddleware } from "./middleware/auth.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import membershipRoutes from "./modules/memberships/membership.routes.js";
 import customerRoutes from "./modules/customers/customer.routes.js";
+import assetRoutes from "./modules/assets/asset.routes.js";
 
 const app: express.Express = express();
 
@@ -18,6 +19,7 @@ app.use(authMiddleware);
 // Routes
 app.use("/api/memberships", membershipRoutes);
 app.use("/api/customers", customerRoutes);
+app.use("/api/assets", assetRoutes);
 
 app.use(errorHandler);
 
