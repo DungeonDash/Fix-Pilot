@@ -5,36 +5,22 @@ import { toast } from "sonner";
 
 import { useAuthApi } from "@/hooks/use-auth-api";
 
-import { CustomerService } from "../services/customer.service";
 import { customerKeys } from "../keys";
-import type { CustomerFormValues } from "../schemas/customer.schema";
+import { CustomerService } from "../services/customer.service";
 
-interface UpdateCustomerPayload {
-  id: string;
-  values: CustomerFormValues;
-}
-
-export function useUpdateCustomer() {
+export function useDeleteCustomer() {
   const { request } = useAuthApi();
-
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      id,
-      values,
-    }: UpdateCustomerPayload) => {
+    mutationFn: async (id: string) => {
       const api = await request();
 
-      return CustomerService.updateCustomer(
-        api,
-        id,
-        values
-      );
+      return CustomerService.deleteCustomer(api, id);
     },
 
     onSuccess: () => {
-      toast.success("Customer updated successfully");
+      toast.success("Customer deleted successfully");
 
       queryClient.invalidateQueries({
         queryKey: customerKeys.all,
@@ -45,7 +31,7 @@ export function useUpdateCustomer() {
       const message =
         error instanceof Error
           ? error.message
-          : "Failed to update customer";
+          : "Failed to delete customer";
 
       toast.error(message);
     },

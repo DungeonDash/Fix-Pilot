@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/providers/query-provider";
+import AppShell from "@/components/ui/layout/shell/app-shell";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <QueryProvider>
-        <html lang="en" className={cn("font-sans", inter.variable)}>
-          <body>{children}</body>
-        </html>
+        {/* <AppShell> */}
+          <html lang="en" className={cn("font-sans", inter.variable)}>
+            <body>{children}</body>
+          </html>
+        {/* </AppShell> */}
       </QueryProvider>
     </ClerkProvider>
   );

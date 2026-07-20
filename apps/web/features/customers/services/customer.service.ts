@@ -58,6 +58,10 @@ export class CustomerService {
     api: AxiosInstance,
     id: string
   ) {
-    await api.delete(`/customers/${id}`);
+    const response = await api.delete(
+    `/customers/${id}`
+  );
+
+  return response.data;
   }
 }

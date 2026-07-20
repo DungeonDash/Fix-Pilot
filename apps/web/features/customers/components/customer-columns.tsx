@@ -4,6 +4,8 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import type { Customer } from "../types";
 
+import { CustomerRowActions } from "./customer-row-actions";
+
 export const customerColumns: ColumnDef<Customer>[] = [
   {
     accessorKey: "name",
@@ -25,4 +27,20 @@ export const customerColumns: ColumnDef<Customer>[] = [
     accessorKey: "state",
     header: "State",
   },
+
+  {
+    id: "actions",
+
+    header: "",
+
+    enableSorting: false,
+
+    enableHiding: false,
+
+    cell: ({ row }) => (
+      <CustomerRowActions
+        customer={row.original}
+      />
+    ),
+  }
 ];
