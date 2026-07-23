@@ -19,7 +19,9 @@ export function useCustomerOptions() {
         limit: 1000,
       });
 
-      return response.data;
+      return Array.isArray(response.data)
+        ? response.data
+        : response.data?.data ?? [];
     },
   });
 }

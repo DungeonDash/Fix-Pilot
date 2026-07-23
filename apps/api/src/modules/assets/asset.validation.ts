@@ -9,6 +9,11 @@ const objectId = z.string().refine(
   }
 );
 
+const optionalDateSchema = z.preprocess(
+  (value) => (value === "" ? undefined : value),
+  z.coerce.date().optional()
+);
+
 export const createAssetSchema = z.object({
   customerId: objectId,
 
@@ -48,11 +53,11 @@ export const createAssetSchema = z.object({
     .max(100)
     .optional(),
 
-  purchaseDate: z.coerce.date().optional(),
+  purchaseDate: optionalDateSchema,
 
-  installationDate: z.coerce.date().optional(),
+  installationDate: optionalDateSchema,
 
-  warrantyExpiry: z.coerce.date().optional(),
+  warrantyExpiry: optionalDateSchema,
 
   location: z
     .string()

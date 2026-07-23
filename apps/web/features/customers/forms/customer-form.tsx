@@ -91,7 +91,7 @@ export function CustomerForm({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Email *</FormLabel>
 
                 <FormControl>
                   <Input
@@ -111,7 +111,7 @@ export function CustomerForm({
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone</FormLabel>
+                <FormLabel>Phone *</FormLabel>
 
                 <FormControl>
                   <Input

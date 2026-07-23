@@ -1,5 +1,10 @@
-import { Dashboard } from "@/features/dashboard/components/dashboard";
 
 export default function Page() {
-  return <Dashboard />;
+  return (
+    <div className="space-y-6">
+      <p className="text-muted-foreground">
+        Welcome to Fix Pilot.
+      </p>
+    </div>
+  );
 }

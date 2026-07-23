@@ -35,6 +35,17 @@ function normalizeAsset(asset: Record<string, unknown>): Asset {
   };
 }
 
+function sanitizePayload<T extends object>(data: T): T {
+  return Object.fromEntries(
+    Object.entries(data).filter(([, value]) => {
+      if (value === "") return false;
+      if (value === undefined) return false;
+
+      return true;
+    })
+  ) as T;
+}
+
 export class AssetService {
   static async getAssets(
     api: AxiosInstance,
@@ -73,7 +84,7 @@ export class AssetService {
   ): Promise<AssetResponse> {
     const response = await api.post(
       "/assets",
-      data
+      sanitizePayload(data)
     );
 
     return {
@@ -89,7 +100,7 @@ export class AssetService {
   ): Promise<AssetResponse> {
     const response = await api.patch(
       `/assets/${id}`,
-      data
+      sanitizePayload(data)
     );
 
     return {

@@ -99,12 +99,19 @@ export function AssetForm({
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select customer" />
+                      <SelectValue
+                        placeholder="Select customer"
+                      >
+                        {customers.find(
+                          (customer: any) =>
+                            customer._id === field.value
+                        )?.name}
+                      </SelectValue>
                     </SelectTrigger>
                   </FormControl>
 
                   <SelectContent>
-                    {customers.map((customer) => (
+                    {customers.map((customer: any) => (
                       <SelectItem
                         key={customer._id}
                         value={customer._id}
@@ -248,7 +255,7 @@ export function AssetForm({
               </FormItem>
             )}
           />
-                    {/* Model */}
+          {/* Model */}
 
           <FormField
             control={form.control}

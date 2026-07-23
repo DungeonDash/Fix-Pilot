@@ -60,6 +60,8 @@ export async function createAsset(
     ),
   };
 
+  console.log("Creating Asset:", payload);
+  
   return AssetModel.create(payload);
 }
 
