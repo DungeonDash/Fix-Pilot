@@ -1,12 +1,39 @@
 import type { AxiosInstance } from "axios";
 
 import type {
+  Asset,
   AssetFilters,
   AssetListResponse,
   AssetResponse,
   CreateAssetDto,
   UpdateAssetDto,
 } from "../types";
+
+function normalizeAsset(asset: Record<string, unknown>): Asset {
+  const assetValue = asset as Partial<Asset> & {
+    _id?: string;
+    customerId?: string | Record<string, unknown>;
+  };
+
+  const customerId = assetValue.customerId;
+  const normalizedCustomerId =
+    typeof customerId === "string"
+      ? customerId
+      : customerId && typeof customerId === "object"
+        ? {
+            ...(customerId as Record<string, unknown>),
+            id:
+              (customerId as { id?: string; _id?: string }).id ??
+              (customerId as { id?: string; _id?: string })._id,
+          }
+        : customerId;
+
+  return {
+    ...(assetValue as Asset),
+    id: assetValue.id ?? assetValue._id ?? "",
+    customerId: normalizedCustomerId as Asset["customerId"],
+  };
+}
 
 export class AssetService {
   static async getAssets(
@@ -17,7 +44,13 @@ export class AssetService {
       params: filters,
     });
 
-    return response.data;
+    return {
+      ...response.data,
+      data: response.data.data.map(
+        (asset: Record<string, unknown>) =>
+          normalizeAsset(asset)
+      ),
+    };
   }
 
   static async getAsset(
@@ -28,7 +61,10 @@ export class AssetService {
       `/assets/${id}`
     );
 
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeAsset(response.data.data),
+    };
   }
 
   static async createAsset(
@@ -40,7 +76,10 @@ export class AssetService {
       data
     );
 
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeAsset(response.data.data),
+    };
   }
 
   static async updateAsset(
@@ -53,7 +92,10 @@ export class AssetService {
       data
     );
 
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeAsset(response.data.data),
+    };
   }
 
   static async deleteAsset(

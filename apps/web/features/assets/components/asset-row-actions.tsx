@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  MoreHorizontal,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { useState } from "react";
+
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,36 +14,68 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import type { Asset } from "../types";
+import { EditAssetDialog } from "../dialogs/edit-asset-dialog";
+import { DeleteAssetDialog } from "../dialogs/delete-asset-dialog";
 
-interface Props {
+interface AssetRowActionsProps {
   asset: Asset;
 }
 
 export function AssetRowActions({
   asset,
-}: Props) {
+}: AssetRowActionsProps) {
+  const [editOpen, setEditOpen] = useState(false);
+
+  const [deleteOpen, setDeleteOpen] =
+    useState(false);
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant="ghost"
-          className="h-8 w-8 p-0"
-        >
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button
+            variant="ghost"
+            size="icon"
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          <Pencil className="mr-2 h-4 w-4" />
-          Edit
-        </DropdownMenuItem>
+        <DropdownMenuContent align="end">
 
-        <DropdownMenuItem className="text-red-600">
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem
+            onClick={() =>
+              setEditOpen(true)
+            }
+          >
+            <Pencil className="mr-2 h-4 w-4" />
+            Edit
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="text-destructive"
+            onClick={() =>
+              setDeleteOpen(true)
+            }
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            Delete
+          </DropdownMenuItem>
+
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <EditAssetDialog
+        asset={asset}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+      />
+
+      <DeleteAssetDialog
+        asset={asset}
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+      />
+    </>
   );
 }

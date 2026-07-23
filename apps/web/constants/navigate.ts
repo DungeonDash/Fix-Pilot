@@ -11,7 +11,7 @@ import {
 export const navigation = [
   {
     title: "Overview",
-    url: "/overview",
+    url: "/",
     icon: LayoutDashboard,
   },
   {
